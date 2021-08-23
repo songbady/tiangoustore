@@ -26,3 +26,4 @@ class user(models.Model):
     class Meta:
         managed = False
         db_table = 'tb_user'
+        verbose_name = verbose_name_plural = '用户信息'

@@ -6,7 +6,6 @@ from user.models import user
 
 
 
-
 # Create your views here.
 def Login(request):
     if request.method=='GET':
@@ -48,7 +47,7 @@ def Register(request):
             return render(request,'register.html',{'error_msg':'该用户已经注册！'})
         else:
             u=user.objects.create(username=name,password=pwd,email=request.POST.get('email'),phone='11111111')
-            return HttpResponse('注册成功')
+            return redirect('/user/login/')
 
 def perInf(request):
     if request.method=='GET':

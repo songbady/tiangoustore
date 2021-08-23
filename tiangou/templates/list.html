@@ -1,0 +1,56 @@
+{% extends 'base_detail_list.html' %}
+{% block title %}天狗商城-商品列表{% endblock title %}
+{% block main_content %}
+	<div class="breadcrumb">
+		<a href="/">全部分类</a>
+		<span>></span>
+		<a href="/good/list/{{Tid}}/{{num}}/">{{ tname }}</a>
+	</div>
+
+	<div class="main_wrap clearfix">
+		<div class="l_wrap fl clearfix">
+			<div class="new_goods">
+				<ul class="subnav fl">
+			<li><a href="/good/list/{{tid1}}/{{num}}/" class="fruit">电脑</a></li>
+			<li><a href="/good/list/{{tid2}}/{{num}}/" class="seafood">手机</a></li>
+			<li><a href="/good/list/{{tid3}}/{{num}}/" class="meet">男装</a></li>
+			<li><a href="/good/list/{{tid4}}/{{num}}/" class="egg">女装</a></li>
+		</ul>
+			</div>
+		</div>
+
+		<div class="r_wrap fr clearfix">
+			
+
+			<ul class="goods_type_list clearfix">
+                {% for good in goodslist %}
+				<li>
+					<a href="/good/detail/{{good.g_id}}"><img src={{good.g_picture}}></a>
+					<h4><a href="/good/detail/{{good.g_id}}">{{ good.g_name }}</a></h4>
+					<div class="operate">
+						<span class="prize">￥{{ good.g_price }}</span>
+						
+						<a href="#" class="add_goods" title="加入购物车"></a>
+					</div>
+				</li>
+                {% endfor %}
+			</ul>
+
+			<div class="pagenation">
+                {% if goodslist.has_previous %}
+				<a href="/good/list/{{Tid}}/{{goodslist.previous_page_number}}/">上一页</a>
+                {% endif %}
+                {% for pindex in pagelist %}
+                    {% if pindex == goodslist.number %}
+				        <a href="/good/list/{{Tid}}/{{pindex}}/" class="active">{{ pindex }}</a>
+                    {% else %}
+				        <a href="/good/list/{{Tid}}/{{pindex}}/" class="active">{{ pindex }}</a>
+                    {% endif %}
+				{% endfor %}
+                {% if goodslist.has_next %}
+				<a href="/good/list/{{Tid}}/{{goodslist.next_page_number}}/">下一页></a>
+                {% endif %}
+			</div>
+		</div>
+	</div>
+{% endblock main_content %}

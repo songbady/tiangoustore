@@ -1,6 +1,4 @@
-
 {# 首页 注册 登录 #}
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 {% load static %}
@@ -8,8 +6,8 @@
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     {# 网页标题内容块 #}
 	<title>{% block title %}{% endblock title %}</title>
-	<link rel="stylesheet" type="text/css" href="/static/css/reset.css ">
-	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 	{# 网页顶部引入文件块 #}
     {% block topfiles %}{% endblock topfiles %}
 </head>
@@ -20,26 +18,28 @@
 		<div class="header">
 			<div class="welcome fl">欢迎来到天天生鲜!</div>
 			<div class="fr">
-               
+                {% if user.is_authenticated %}
 				<div class="login_btn fl">
 					欢迎您：<em>{{ username }}</em>
                     <span>|</span>
-					<a href="#">退出</a>
+					<a href="{% url 'user:logout' %}">退出</a>
 				</div>
-                
+                {% else %}
 				<div class="login_btn fl">
-					<a href="#">登录</a>
+					<a href="{% url 'user:login' %}">登录</a>
 					<span>|</span>
-					<a href="#">注册</a>
+					<a href="{% url 'user:register' %}">注册</a>
 				</div>
-               
+                {% endif %}
 				<div class="user_link fl">
 					<span>|</span>
-					<a href="#">用户中心</a>
+					<a href="/user/perInf/">用户中心</a>
 					<span>|</span>
 					<a href="#">我的购物车</a>
 					<span>|</span>
 					<a href="#">我的订单</a>
+					<span>|</span>
+					<a href="/user/logout/" style='color:red' onclick="return check_return()">退出登录</a>
 				</div>
 			</div>
 		</div>		
@@ -49,7 +49,7 @@
 {# 网页顶部搜索框块 #}
 {% block search_bar %}
 	<div class="search_bar clearfix">
-		<a href="index.html" class="logo fl"><img src="{% static 'images/logo.png' %}"></a>
+		<a href="/" class="logo fl"><img src="{% static 'images/logo.jpg' %}"></a>
 		<div class="search_con fl">
             <form method="get" action="/search">
                 <input type="text" class="input_text fl" name="q" placeholder="搜索商品">
@@ -83,5 +83,15 @@
     {% block bottom %}{% endblock bottom %}
     {# 网页底部引入文件块 #}
 	{% block bottomfiles %}{% endblock bottomfiles %}
+	<script type="text/javascript">
+	function check_return(){
+		if (confirm('确定退出吗?')){
+			return true
+		}
+		else{
+			return false
+		}
+	}
+	</script>
 </body>
 </html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>天狗-商品详情</title>
+	<link rel="stylesheet" type="text/css" href="/static/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
+</head>
+<body>
+	<div class="header_con">
+		<div class="header">
+			<div class="welcome fl">欢迎来到天狗商城!</div>
+			<div class="fr">
+				<div class="login_info fl">
+					欢迎您：<em>张 山</em>
+				</div>
+				<div class="login_btn fl">
+					<a href="/user/login/">登录</a>
+					<span>|</span>
+					<a href="/user/register/">注册</a>
+				</div>
+				<div class="user_link fl">
+					<span>|</span>
+					<a href="/user/perInf/">用户中心</a>
+					<span>|</span>
+					<a href="cart.html">我的购物车</a>
+					<span>|</span>
+					<a href="user_center_order.html">我的订单</a>
+					<span>|</span>
+					<a href="/user/logout/" style='color:red' onclick="return check_return()">退出登录</a>
+				</div>
+			</div>
+		</div>		
+	</div>
+
+	<div class="search_bar clearfix">
+		<a href="/" class="logo fl"><img src="/static/images/logo.jpg"></a>
+		<div class="search_con fl">
+			<input type="text" class="input_text fl" name="" placeholder="搜索商品">
+			<input type="button" class="input_btn fr" name="" value="搜索">
+		</div>
+		<div class="guest_cart fr">
+			<a href="cart.html" class="cart_name fl">我的购物车</a>
+			<div class="goods_count fl" id="show_count">1</div>
+		</div>
+	</div>
+
+	<div class="navbar_con">
+		<div class="navbar clearfix">
+			<div class="subnav_con fl">
+				<h1>全部商品分类</h1>	
+				<span></span>			
+				<ul class="subnav">
+					<li><a href="/good/list/{{tid1}}/{{num}}/" class="fruit">电脑</a></li>
+					<li><a href="/good/list/{{tid2}}/{{num}}/" class="seafood">手机</a></li>
+					<li><a href="/good/list/{{tid3}}/{{num}}/" class="meet">男装</a></li>
+					<li><a href="/good/list/{{tid4}}/{{num}}/" class="egg">女装</a></li>
+					
+				</ul>
+			</div>
+			<ul class="navlist fl">
+				<li><a href="/">首页</a></li>
+				
+			</ul>
+		</div>
+	</div>
+
+	<div class="breadcrumb">
+		<a href="/">全部分类</a>
+		<span>></span>
+		<a href="/good/list/{{good.t_id}}/{{num}}/">{{tname}}</a>
+		<span>></span>
+		<a href="">商品详情</a>
+	</div>
+
+	<div class="goods_detail_con clearfix">
+		<div class="goods_detail_pic fl"><img src={{good.g_picture}} height='350', width='350'></div>
+
+		<div class="goods_detail_list fr">
+			<h3>{{good.g_name}}</h3>
+			<br>
+			<div class="prize_bar">
+				<span class="show_pirze">¥<em>{{good.g_price}}</em></span>
+				<span class="show_unit">库  存：{{good.g_total}}</span>
+			</div>
+			<div class="goods_num clearfix">
+				<div class="num_name fl">数 量：</div>
+				<div class="num_add fl">
+					<input type="text" class="num_show fl" value="1" g_total={{good.g_total}}>
+					<a href="javascript:;" class="add fr" g_total={{good.g_total}}>+</a>
+					<a href="javascript:;" class="minus fr">-</a>	
+				</div> 
+			</div>
+			<div class="total">总价：<em>{{good.g_price}}</em></div>
+			<div class="operate_btn">
+				<a href="javascript:;" class="buy_btn">立即购买</a>
+				<a href="javascript:;" class="add_cart" id="add_cart">加入购物车</a>				
+			</div>
+		</div>
+	</div>
+
+	<div class="main_wrap clearfix">
+		<div class="l_wrap fl clearfix">
+			<div class="new_goods">
+				<h3>新品推荐</h3>
+				<ul>
+				{%for ngood in newgoods %}
+					<li>
+						<a href="/good/detail/{{ngood.g_id}}/"><img src={{ngood.g_picture}}></a>
+						<h4><a href="/good/detail/{{ngood.g_id}}/">{{ngood.g_name}}</a></h4>
+						<div class="prize">￥{{ngood.g_price}}</div>
+					</li>
+				{%endfor%}
+				</ul>
+			</div>
+		</div>
+
+		<div class="r_wrap fr clearfix">
+			<ul class="detail_tab clearfix">
+				<li class="active">商品介绍</li>
+				
+			</ul>
+
+			<div class="tab_content">
+				<dl>
+					<dt>商品详情：</dt>
+					<dd>{{good.g_intro}} </dd>
+				</dl>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="footer">
+		<div class="foot_link">
+			<a href="#">关于我们</a>
+			<span>|</span>
+			<a href="#">联系我们</a>
+			<span>|</span>
+			<a href="#">招聘人才</a>
+			<span>|</span>
+			<a href="#">友情链接</a>		
+		</div>
+		<p>CopyRight © 2016 北京天天生鲜信息技术有限公司 All Rights Reserved</p>
+		<p>电话：010-****888    京ICP备*******8号</p>
+	</div>
+	<div class="add_jump"></div>
+
+	<script type="text/javascript" src='/static/js/jquery-1.12.4.min.js'></script>
+	<script type="text/javascript">
+
+        // 计算商品的总价格
+        function update_goods_amount() {
+            // 获取商品的单价和数量
+            price = $('.show_pirze').children('em').text()
+            count = $('.num_show').val()
+            // 计算商品的总价
+            price = parseFloat(price)
+            count = parseInt(count)
+            amount = price*count
+            // 设置商品的总价
+            $('.total').children('em').text(amount.toFixed(2)+'元')
+        }
+
+        // 增加商品的数量
+        $(document).on('click','.add',function () {
+            //商品库存
+            gtotal = $(this).attr("g_total")
+            // 获取商品原有的数目
+            count = $('.num_show').val()
+            // 加1
+            count = parseInt(count)+1
+            if (count > gtotal){
+                count = gtotal
+            }
+            // 重新设置商品的数目
+            $('.num_show').val(count)
+            // 更新商品的总价
+            update_goods_amount()
+        })
+
+        // 减少商品的数量
+        $(document).on('click','.minus',function () {
+            // 获取商品原有的数目
+            count = $('.num_show').val()
+            // 减1
+            count = parseInt(count)-1
+            if (count <= 0){
+                count = 1
+            }
+            // 重新设置商品的数目
+            $('.num_show').val(count)
+            // 更新商品的总价
+            update_goods_amount()
+        })
+
+        // 手动输入商品的数量
+        $('.num_show').blur(function () {
+            //商品库存
+            gtotal = $(this).attr("g_total")
+            // 获取用户输入的数目
+            count = $(this).val()
+            // 校验count是否合法
+            if (isNaN(count) || count.trim().length==0 || parseInt(count) <=0){
+                count = 1
+            }
+            if (parseInt(count) > gtotal){
+                count = gtotal
+            }
+            // 重新设置商品的数目
+            $(this).val(parseInt(count))
+            // 更新商品的总价
+            update_goods_amount()
+        })
+
+        // 获取add_cart div元素左上角的坐标
+		var $add_x = $('#add_cart').offset().top;
+		var $add_y = $('#add_cart').offset().left;
+
+        // 获取show_count div元素左上角的坐标
+		var $to_x = $('#show_count').offset().top;
+		var $to_y = $('#show_count').offset().left;
+
+
+		$(document).on('click','#add_cart',function(){
+            // 获取商品id和商品数量
+            sku_id = $(this).attr('sku_id') // attr prop
+            count = $('.num_show').val()
+            csrf = $('input[name="csrfmiddlewaretoken"]').val()
+            // 组织参数
+            params = {'g_id':sku_id, 'count':count, 'csrfmiddlewaretoken':csrf}
+            // 发起ajax post请求，访问/cart/add, 传递参数:sku_id count
+            $.post('/cart/add', params, function (data) {
+                if (data.res == 5){
+                    // 添加成功
+                    $(".add_jump").css({'left':$add_y+80,'top':$add_x+10,'display':'block'})
+                    $(".add_jump").stop().animate({
+                        'left': $to_y+7,
+                        'top': $to_x+7},
+                        "fast", function() {
+                            $(".add_jump").fadeOut('fast',function(){
+                                // 重新设置用户购物车中商品的条目数
+                                $('#show_count').html(data.total_count);
+                            });
+			        });
+                }
+                else{
+                    // 添加失败
+                    alert(data.errmsg)
+                }
+            })
+		})
+
+        $(document).on('click',".buy_btn",function(){
+            sku_id = $(this).attr('sku_id')
+            count = $('.num_show').val()
+            csrf = $('input[name="csrfmiddlewaretoken"]').val()
+            // 组织参数
+            params = {'g_id':sku_id, 'count':count, 'csrfmiddlewaretoken':csrf}
+            $.post('#', params , function(data){    //填入创建订单函数的url
+                if(data.res!=5){    //添加失败
+                    alert(data.errmsg)
+                }
+            })
+        })
+	</script>
+	<script type="text/javascript">
+	function check_return(){
+		if (confirm('确定退出吗?')){
+			return true
+		}
+		else{
+			return false
+		}
+	}
+	</script>
+</body>
+</html>

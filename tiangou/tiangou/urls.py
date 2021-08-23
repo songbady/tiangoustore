@@ -16,8 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
+
+from good import views as gviews
 urlpatterns = [
+    path('', gviews.index),
     path('admin/', admin.site.urls),
-    path('user/', include('user.urls',namespace='user')),
+    path('user/', include('user.urls',namespace='user')), #为用户模块分配名字空间
+    path('good/', include('good.urls',namespace='good')), #为商品模块分配名字空间
 
 ]
+

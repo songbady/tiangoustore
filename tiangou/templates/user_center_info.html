@@ -2,9 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-	<title>天天生鲜-用户中心</title>
+	<title>天狗商城-用户中心</title>
 	<link rel="stylesheet" type="text/css" href="/static/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
+	
 </head>
 <body>
 	<div class="header_con">
@@ -15,24 +16,26 @@
 					欢迎您：<em>张 山</em>
 				</div>
 				<div class="login_btn fl">
-					<a href="login.html">登录</a>
+					<a href="/user/login/">登录</a>
 					<span>|</span>
-					<a href="register.html">注册</a>
+					<a href="/user/register/">注册</a>
 				</div>
 				<div class="user_link fl">
 					<span>|</span>
-					<a href="user_center_info.html">用户中心</a>
+					<a href="/user/perInf/">用户中心</a>
 					<span>|</span>
 					<a href="cart.html">我的购物车</a>
 					<span>|</span>
 					<a href="user_center_order.html">我的订单</a>
+					<span>|</span>
+					<a href="/user/logout/" style='color:red' onclick="return check_return()">退出登录</a>
 				</div>
 			</div>
 		</div>		
 	</div>
 
 	<div class="search_bar clearfix">
-		<a href="index.html" class="logo fl"><img src="/static/images/logo.jpg"></a>
+		<a href="/" class="logo fl"><img src="/static/images/logo.jpg"></a>
 		<div class="sub_page_name fl">|&nbsp;&nbsp;&nbsp;&nbsp;用户中心</div>
 		<div class="search_con fr">
 			<input type="text" class="input_text fl" name="" placeholder="搜索商品">
@@ -52,21 +55,26 @@
 		<div class="right_content clearfix">
 				<div class="info_con clearfix">
 				<h3 class="common_title2">基本信息</h3>
-                <form method="post" action="#"> {% csrf_token %}
+                <form method="post" action="#" > {% csrf_token %}
 						<ul class="user_info_list">
 							<li>
-                                <label>用户名：</label>{{username}}
+                                <label>用户名：</label>{{user.username}}
                             </li>
 							<li >
-                            <label>电话：</label><input type="text" name="phone" value="{{ phone }}">    
-                                
+                            <label>电话：</label>
+							<input type="text" name="phone" value="{{ user.phone }}" id='phone'>   
+							<nobr class="error_tip" id="error1"></nobr>
+                              
                             </li>
+							
 							<li>
-                            <label>邮箱：</label><input type="text" name="email" value="{{ email }}">    
+                            <label>邮箱：
+							</label><input type="text" name="email" value="{{ user.email }}" id='email' > 
+							<nobr class="error_tip" id="error2"></nobr>   
                             
                             </li>		
                             <li>
-                                    <input type="submit" value="确认" class="info_submit" style="width:40px;height:24px;">
+                                    <input type="submit" value="确认" class="info_submit" style="width:40px;height:24px;" >
                             </li>	
 						</ul>
 				</div>
@@ -84,45 +92,9 @@
 					</div>
 				</li>
 
-				<li>
-					<a href="#"><img src="images/goods/goods004.jpg"></a>
-					<h4><a href="#">吐鲁番梨光杏</a></h4>
-					<div class="operate">
-						<span class="prize">￥5.50</span>
-						<span class="unit">5.50/500g</span>
-						<a href="#" class="add_goods" title="加入购物车"></a>
-					</div>
-				</li>
-
-				<li>
-					<a href="#"><img src="images/goods/goods005.jpg"></a>
-					<h4><a href="#">黄肉桃</a></h4>
-					<div class="operate">
-						<span class="prize">￥10.00</span>
-						<span class="unit">10.00/500g</span>
-						<a href="#" class="add_goods" title="加入购物车"></a>
-					</div>
-				</li>
-
-				<li>
-					<a href="#"><img src="images/goods/goods006.jpg"></a>
-					<h4><a href="#">进口西梅</a></h4>
-					<div class="operate">
-						<span class="prize">￥28.80</span>
-						<span class="unit">28.8/500g</span>
-						<a href="#" class="add_goods" title="加入购物车"></a>
-					</div>
-				</li>
-
-				<li>
-					<a href="#"><img src="images/goods/goods007.jpg"></a>
-					<h4><a href="#">香梨</a></h4>
-					<div class="operate">
-						<span class="prize">￥6.45</span>
-						<span class="unit">6.45/500g</span>
-						<a href="#" class="add_goods" title="加入购物车"></a>
-					</div>
-				</li>
+				
+				
+				
 			</ul>
 		</div>
 		</div>
@@ -143,6 +115,31 @@
 		<p>CopyRight © 2021 重庆天狗商城信息技术有限公司 All Rights Reserved</p>
 		<p>电话：023-****888    渝ICP备*******8号</p>
 	</div>
-	
+	<script type="text/javascript">
+	function check_return(){
+		if (confirm('确定退出吗?')){
+			return true
+		}
+		else{
+			return false
+		}
+	}
+	</script>
+
+
+<script type="text/javascript">
+	function check(){
+		var phone = document.getElementById("phone").value;
+    	var email = document.getElementById("email").value;
+
+		if(password == repassword) {
+			document.getElementById("tip").innerHTML="<br><font color='green'>两次密码输入一致</font>";
+			document.getElementById("submit").disabled = false;
+		}else {
+			document.getElementById("tip").innerHTML="<br><font color='red'>两次输入密码不一致!</font>";
+			document.getElementById("submit").disabled = true; 
+		} 
+	}
+</script>
 </body>
 </html>

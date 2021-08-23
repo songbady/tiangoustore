@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'user',
+    'good',
 ]
 
 MIDDLEWARE = [
@@ -79,8 +80,8 @@ WSGI_APPLICATION = 'tiangou.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'wstext',
-         'HOST': '114.116.227.157', # 数据库地址，弹性公网 ip 地址 114.116.227.157
+        'NAME': 'tiangou',
+         'HOST': '114.116.227.157', # 数据库地址，本机 ip 地址 127.0.0.1 
         'PORT': 3306, # 端口 
         'USER': 'root',  # 数据库用户名
         'PASSWORD': '123456', # 数据库密码

@@ -1,0 +1,41 @@
+{% extends 'base_user_center.html' %}
+{% block topfiles %}
+	<script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="/static/js/user_center.js"></script>
+{% endblock topfiles %}
+
+
+{% block right_content %}
+		<div class="right_content clearfix">
+				<div class="info_con clearfix">
+				<h3 class="common_title2">基本信息</h3>
+                        <form method="post" action="#"> {% csrf_token %}    {#设为更改信息函数的路径#}
+						<ul class="user_info_list">
+                            <li>
+                                <span>用户名：</span>{{ user.username }}
+                            </li>
+							<li>
+                                <label>电话：</label>
+                                <input type="text" name="phone" id="phone" value="{{ user.phone }}">
+                                <nobr class="error_tip" style="color:red"></nobr>
+                            </li>
+                            <li>
+                                <label>邮箱：</label>
+                                <input type="text" name="email" id="email" value="{{ user.email }}">
+                                <nobr class="error_tip" style="color:red"></nobr>
+                            </li>
+                            <li>
+                                <input type="submit" value="确认" class="info_submit" style="width:40px;height:24px;">
+                            </li>
+						</ul>
+                        <form>
+				</div>
+				
+				<h3 class="common_title2">最近浏览</h3>
+				<div class="has_view_list">
+					<ul class="goods_type_list clearfix">
+                        
+			        </ul>
+		        </div>
+		</div>
+{% endblock right_content %}

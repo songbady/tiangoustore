@@ -45,6 +45,7 @@ $(function(){
 			$('#user_name').next().html('请输入5-20个字符的用户名')
 			$('#user_name').next().show();
 			error_name = true;
+			
 		}
 		else
 		{
@@ -99,13 +100,13 @@ $(function(){
 		{
 			$('#email').next().html('你输入的邮箱格式不正确')
 			$('#email').next().show();
-			error_check_password = true;
+			error_email = true;
 		}
 
 	}
 
 
-	$('#reg_form').submit(function() {
+	$('form').submit(function() {
 		check_user_name();
 		check_pwd();
 		check_cpwd();

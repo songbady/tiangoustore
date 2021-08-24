@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.utils.html import format_html
 # Create your models here.
 #创建商品类
 class good(models.Model):
@@ -13,9 +13,18 @@ class good(models.Model):
     g_total=models.IntegerField(verbose_name='商品库存',db_column='g_total') #商品库存
     def getTname(self):
         return type.objects.get(t_id=self.t_id).t_name
+    def image_data(self):
+        return format_html(
+            '<img src="{}" width="40px"/>',
+            self.g_picture,
+        )
+    image_data.short_description = '商品图片'
+    getTname.short_description = '商品类别'
+
     class Meta:
         db_table='tb_goods'
         verbose_name = verbose_name_plural = '商品信息'
+
 #创建类别类
 class type(models.Model):
     t_id=models.IntegerField(db_column='t_id')

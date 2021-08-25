@@ -11,6 +11,7 @@ class good(models.Model):
     t_id=models.IntegerField(verbose_name='商品类别id',db_column='t_id') #商品类别id
     uptime=models.DateTimeField(verbose_name='商品上架时间',db_column='uptime',auto_now_add=True) #商品上架时间，下架时间未用上暂时未写
     g_total=models.IntegerField(verbose_name='商品库存',db_column='g_total') #商品库存
+    g_status=models.IntegerField(db_column='g_status')   
     def getTname(self):
         return type.objects.get(t_id=self.t_id).t_name
     def image_data(self):

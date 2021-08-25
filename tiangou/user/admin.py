@@ -19,3 +19,5 @@ class userAdmin(admin.ModelAdmin):
     search_fields = ['u_id','username','phone']
     #可在列表操作的信息
     list_editable = ['email','phone','ban']
+    #分页功能
+    list_per_page = 8

@@ -15,4 +15,6 @@ class goodAdmin(admin.ModelAdmin):
     search_fields = ['g_id','g_name','t_id']
     #可在列表操作的信息
     list_editable = ['g_price','g_total']
+    #分页功能
+    list_per_page = 8
 

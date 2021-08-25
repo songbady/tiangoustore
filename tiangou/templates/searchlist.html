@@ -4,7 +4,7 @@
 	<div class="breadcrumb">
 		<a href="/">全部分类</a>
 		<span>></span>
-		<a href="/good/list/{{Tid}}/{{num}}/">{{ tname }}</a>
+		<a href="">搜索商品</a>
 	</div>
 
 	<div class="main_wrap clearfix">
@@ -20,7 +20,7 @@
 		</div>
 
 		<div class="r_wrap fr clearfix">
-			
+			{%if hasgood%}
 
 			<ul class="goods_type_list clearfix">
                 {% for good in goodslist %}
@@ -38,19 +38,22 @@
 
 			<div class="pagenation">
                 {% if goodslist.has_previous %}
-				<a href="/good/list/{{Tid}}/{{goodslist.previous_page_number}}/">上一页</a>
+				<a href="/good/search/{{goodslist.previous_page_number}}/">上一页</a>
                 {% endif %}
                 {% for pindex in pagelist %}
                     {% if pindex == goodslist.number %}
-				        <a href="/good/list/{{Tid}}/{{pindex}}/" class="active">{{ pindex }}</a>
+				        <a href="/good/search/{{pindex}}/" class="active">{{ pindex }}</a>
                     {% else %}
-				        <a href="/good/list/{{Tid}}/{{pindex}}/" >{{ pindex }}</a>
+				        <a href="/good/search/{{pindex}}/">{{ pindex }}</a>
                     {% endif %}
 				{% endfor %}
                 {% if goodslist.has_next %}
-				<a href="/good/list/{{Tid}}/{{goodslist.next_page_number}}/">下一页></a>
+				<a href="/good/search/{{goodslist.next_page_number}}/">下一页></a>
                 {% endif %}
 			</div>
+			{%else%}
+			<div><br><br><br><br><p style="text-align:center; font-size:20px">没有您想要的商品!</p></div>
+			{%endif%}
 		</div>
 	</div>
 {% endblock main_content %}

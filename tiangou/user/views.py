@@ -20,6 +20,10 @@ def Login(request):
         #判断数据库中有无该用户    
         isuser=user.objects.filter(username=name).exists()
         if (isuser):
+            #判断用户是否被禁用
+            nowuser=user.objects.get(username=name)
+            if (nowuser.ban==1):
+                    return render(request,'login.html',{'error_msg':'该用户已被禁用！'})
             #若该用户存在，获取真的密码
             rel_pwd=user.objects.filter(username=name).get(username=name).password
             cur_user=user.objects.filter(username=name).get(username=name)
@@ -75,7 +79,7 @@ def perInf(request):
             curr_u_id=int(request.session.get('u_id'))
             #查询用户
             curr_user=user.objects.get(u_id=curr_u_id)
-            return render(request,'user_center_info1.html',{'user':curr_user})
+            return render(request,'user_center_info.html',{'user':curr_user})
         else:
             #跳转至登录界面
             return redirect('/user/login/')
@@ -88,5 +92,5 @@ def perInf(request):
         #更新数据库信息
         user.objects.filter(u_id=request.session.get('u_id')).update(phone=new_phone,email=new_email)
         curr_user=user.objects.get(u_id=request.session.get('u_id'))
-        return render(request,'user_center_info1.html',{"user":curr_user})
+        return render(request,'user_center_info.html',{"user":curr_user})
     

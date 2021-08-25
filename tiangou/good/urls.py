@@ -9,6 +9,6 @@ urlpatterns = [
     
     path('list/<int:tid>/<int:num>/', views.list), #传递参数tid,num给函数list
     path('detail/<int:gid>/',views.detail), #同理
-    
+    path('search/<int:num>/',views.search)
 
 ]

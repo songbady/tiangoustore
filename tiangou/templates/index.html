@@ -8,6 +8,7 @@
 	<script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
 	<script type="text/javascript" src="/static/js/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="/static/js/slide.js"></script>
+	<script type="text/javascript" src="/static/js/search.js"></script>
 </head>
 <body>
 	<div class="header_con">
@@ -31,8 +32,10 @@
 					<a href="cart.html">我的购物车</a>
 					<span>|</span>
 					<a href="user_center_order.html">我的订单</a>
+					{%if islogin%}
 					<span>|</span>
 					<a href="/user/logout/" style='color:red' onclick="return check_return()">退出登录</a>
+					{%endif%}
 				</div>
 			</div>
 		</div>		
@@ -41,8 +44,10 @@
 	<div class="search_bar clearfix">
 		<a href="/" class="logo fl"><img src="/static/images/logo.jpg"></a>
 		<div class="search_con fl">
-			<input type="text" class="input_text fl" name="" placeholder="搜索商品">
-			<input type="button" class="input_btn fr" name="" value="搜索">
+		<form method='post' action='/good/search/{{num}}/'> {%csrf_token%}
+			<input type="text" class="input_text fl" name="search_good" placeholder="搜索商品" id='search'>
+			<input type="submit" class="input_btn fr" name="submit" value="搜索" id='submit'>
+		</form>
 		</div>
 		<div class="guest_cart fr">
 			<a href="#" class="cart_name fl">我的购物车</a>
@@ -130,32 +135,19 @@
 		<div class="list_title clearfix">
 			<h3 class="fl" id="model03">男装</h3>
 	
-			<a href="#" class="goods_more fr">查看更多 ></a>
+			<a href="/good/list/{{tid3}}/{{num}}/" class="goods_more fr">查看更多 ></a>
 		</div>
 
 		<div class="goods_con clearfix">
 			<div class="goods_banner fl"><img src={{r}}></div>
 			<ul class="goods_list fl">
+				{% for mgood in m_list %}
 				<li>
-					<h4><a href="#">维多利亚葡萄维多利亚葡萄维多利亚葡萄维多利亚葡萄</a></h4>
-					<a href="#"><img src={{r}}></a>
-					<div class="prize">¥ 38.00</div>
+					<h4><a href="/good/detail/{{mgood.g_id}}/">{{mgood.g_name}}</a></h4>
+					<a href="/good/detail/{{mgood.g_id}}/"><img src={{mgood.g_picture}}></a>
+					<div class="prize">¥ {{mgood.g_price}}</div>
 				</li>
-				<li>
-					<h4><a href="#">维多利亚葡萄</a></h4>
-					<a href="#"><img src={{r}}></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-				<li>
-					<h4><a href="#">维多利亚葡萄</a></h4>
-					<a href="#"><img src={{r}}></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-				<li>
-					<h4><a href="#">维多利亚葡萄</a></h4>
-					<a href="#"><img src={{r}}></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
+			{% endfor %}
 			</ul>
 		</div>
 	</div>
@@ -164,32 +156,19 @@
 		<div class="list_title clearfix">
 			<h3 class="fl" id="model04">女装</h3>
 			
-			<a href="#" class="goods_more fr">查看更多 ></a>
+			<a href="/good/list/{{tid4}}/{{num}}/" class="goods_more fr">查看更多 ></a>
 		</div>
 
 		<div class="goods_con clearfix">
 			<div class="goods_banner fl"><img src={{r}}></div>
 			<ul class="goods_list fl">
+				{% for wgood in w_list %}
 				<li>
-					<h4><a href="#">维多利亚葡萄维多利亚葡萄维多利亚葡萄维多利亚葡萄</a></h4>
-					<a href="#"><img src={{r}}></a>
-					<div class="prize">¥ 38.00</div>
+					<h4><a href="/good/detail/{{wgood.g_id}}/">{{wgood.g_name}}</a></h4>
+					<a href="/good/detail/{{wgood.g_id}}/"><img src={{wgood.g_picture}}></a>
+					<div class="prize">¥ {{wgood.g_price}}</div>
 				</li>
-				<li>
-					<h4><a href="#">维多利亚葡萄</a></h4>
-					<a href="#"><img src={{r}}></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-				<li>
-					<h4><a href="#">维多利亚葡萄</a></h4>
-					<a href="#"><img src={{r}}></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
-				<li>
-					<h4><a href="#">维多利亚葡萄</a></h4>
-					<a href="#"><img src={{r}}></a>
-					<div class="prize">¥ 38.00</div>
-				</li>
+			{% endfor %}
 			</ul>
 		</div>
 	</div>
@@ -206,7 +185,7 @@
 			<span>|</span>
 			<a href="#">友情链接</a>		
 		</div>
-		<p>CopyRight © 2016 北京天天生鲜信息技术有限公司 All Rights Reserved</p>
+		<p>CopyRight © 2016 重庆天狗商城信息技术有限公司 All Rights Reserved</p>
 		<p>电话：010-****888    京ICP备*******8号</p>
 	</div>
 	<script type="text/javascript" src="/static/js/slideshow.js"></script>

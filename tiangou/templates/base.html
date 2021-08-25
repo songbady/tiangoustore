@@ -9,14 +9,17 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 	{# 网页顶部引入文件块 #}
-    {% block topfiles %}{% endblock topfiles %}
+    {% block topfiles %}
+	<script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="/static/js/search.js"></script>
+	{% endblock topfiles %}
 </head>
 <body>
 {# 网页顶部欢迎信息块 #}
 {% block header_con %}
 	<div class="header_con">
 		<div class="header">
-			<div class="welcome fl">欢迎来到天天生鲜!</div>
+			<div class="welcome fl">欢迎来到天狗商城!</div>
 			<div class="fr">
                 {% if user.is_authenticated %}
 				<div class="login_btn fl">
@@ -51,10 +54,10 @@
 	<div class="search_bar clearfix">
 		<a href="/" class="logo fl"><img src="{% static 'images/logo.jpg' %}"></a>
 		<div class="search_con fl">
-            <form method="get" action="/search">
-                <input type="text" class="input_text fl" name="q" placeholder="搜索商品">
-                <input type="submit" class="input_btn fr" name="" value="搜索">
-            </form>
+            <form method='post' action='/good/search/{{num}}/'> {%csrf_token%}
+			<input type="text" class="input_text fl" name="search_good" placeholder="搜索商品" id='search'>
+			<input type="submit" class="input_btn fr" name="submit" value="搜索" id='submit'>
+		</form>
 		</div>
 		<div class="guest_cart fr">
 			<a href="#" class="cart_name fl">我的购物车</a>
@@ -76,7 +79,7 @@
 			<span>|</span>
 			<a href="#">友情链接</a>		
 		</div>
-		<p>CopyRight © 2016 北京天天生鲜信息技术有限公司 All Rights Reserved</p>
+		<p>CopyRight © 2016 重庆天狗商城信息技术有限公司 All Rights Reserved</p>
 		<p>电话：010-****888    京ICP备*******8号</p>
 	</div>
     {# 网页底部html元素块 #}

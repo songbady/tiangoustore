@@ -1,10 +1,14 @@
 from django.db import models
 from user.models import user
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,HttpResponseRedirect
 from django.http import HttpResponse
-from user.models import user
-
-
+from user.models import user,reciver
+from good.models import good
+from order.models import order
+import math
+from django.core.paginator import Paginator
+import re
+from django.urls import reverse
 
 
 # Create your views here.
@@ -79,7 +83,7 @@ def perInf(request):
             curr_u_id=int(request.session.get('u_id'))
             #查询用户
             curr_user=user.objects.get(u_id=curr_u_id)
-            return render(request,'user_center_info.html',{'user':curr_user})
+            return render(request,'user_center_info.html',{'user':curr_user,'num':1})
         else:
             #跳转至登录界面
             return redirect('/user/login/')
@@ -92,5 +96,91 @@ def perInf(request):
         #更新数据库信息
         user.objects.filter(u_id=request.session.get('u_id')).update(phone=new_phone,email=new_email)
         curr_user=user.objects.get(u_id=request.session.get('u_id'))
-        return render(request,'user_center_info.html',{"user":curr_user})
+        return render(request,'user_center_info.html',{"user":curr_user,'num':1})
+def showorders(reqeust,num):
+    num=int(num)
+    #查询所有订单
+    orderlist=order.objects.filter(u_id=int(reqeust.session.get('u_id')))
+    #分页显示
+    pager=Paginator(orderlist,1)
+    #获取当前页面订单
+    page_orderlist=pager.page(num)
+    #计算开始页码
+    begin=(num-int(math.ceil(10.0/2)))
+    if begin<1:
+        begin=1
+    #计算结束页码
+    end=begin+9
+    if end>pager.num_pages:
+        end=pager.num_pages
+    if end<=10:
+        begin=1
+    else:
+        begin=end-9
+    pagelist=range(begin,end+1)  
+    return render(reqeust,'user_center_order.html',{'orderlist':page_orderlist,'pagelist':pagelist})
+
+def placeorder(request,oid):
+    
+    oid=int(oid)
+    #获取当前订单
+    curr_order=order.objects.get(o_id=oid)
+     #获取商品
+    curr_good=good.objects.get(g_id=curr_order.g_id)
+    total_price=curr_order.price
+    count=curr_order.o_number
+    
+   
+    #获取地址
+    uid=request.session.get('u_id')
+    hasaddress=reciver.objects.filter(u_id=uid).exists()
+    curr_reciver=reciver.objects.filter(u_id=uid).order_by('createtime').last()
+
+   
+    #设置运费，默认10元，满50免运费
+    if (total_price>=50):
+        transit_price=0
+    else:
+        transit_price=10
+    total_pay=total_price+transit_price
+    return render(request,'place_order.html',{'good':curr_good,'total_price':total_price,'transit_price':transit_price,'total_count':count,'total_pay':total_pay,'num':1,'curr_order':curr_order,'hasaddress':hasaddress,'reciver':curr_reciver})
+
+def addresschange(request):
+
+
+    if request.method=='GET':
+            #从session获取用户id
+            uid=int(request.session.get('u_id'))
+            hasaddress=reciver.objects.filter(u_id=uid).exists()
+            curr_reciver=reciver.objects.filter(u_id=uid).order_by('createtime').last()
+           
+            return render(request,'user_center_site.html',{'reciver':curr_reciver,'hasaddress':hasaddress,'num':1})
+    else:
+        uid=int(request.session.get('u_id'))
+        hasaddress=reciver.objects.filter(u_id=uid).exists()
+        curr_reciver=reciver.objects.filter(u_id=uid).order_by('createtime').last()
+        #user=request.user #用户名
+        uid=request.session.get('u_id')
+        name=request.POST.get('r_name') #收件人
+        province = request.POST.get('r_province') #地址
+        city = request.POST.get('r_city')
+        district = request.POST.get('r_district')
+        address=request.POST.get('r_address')
+        zipcode = request.POST.get('r_zipcode') #邮编
+        phone = request.POST.get('r_phone') #手机号码
+
+        # 2.校验数据
+        if not all([name,province,city,district,address,zipcode,phone]):
+            return render(request, 'user_center_site.html', {'errmsg': '输入不完整','reciver':curr_reciver,'hasaddress':hasaddress,'num':1})
+
+        if not re.match(r'^1[3|4|5|7|8][0-9]{9}$', phone):
+            return render(request, 'user_center_site.html', {'errmsg': '手机格式不正确','reciver':curr_reciver,'hasaddress':hasaddress,'num':1})
+
+        reciver.objects.create(u_id=uid,r_name=name,r_province=province,r_city=city,r_district=district,r_address=address,
+                                r_zipcode=zipcode,r_phone=phone)#is_default=is_default)
+        #Address.objects.filter(u_id=request.session.get('u_id')).update(r_name=r_name,r_province=r_province,r_city=r_city,
+        #                                       r_district=r_district,r_alias=r_alias,r_zipcode=r_zipcode,r_phone=r_phone)
+                                                                       
+        return HttpResponseRedirect(reverse("user:addsite_show"))  # get请求
+
     

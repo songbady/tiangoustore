@@ -1,0 +1,53 @@
+
+{% extends 'base_user_center.html' %}
+{% block topfiles %}
+	<script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="/static/js/user_center.js"></script>
+{% endblock topfiles %}
+
+{% block right_content %}
+	
+        <div class="right_content clearfix">
+		<h2 class="common_title2">收货地址管理</h2>
+		<div class="site_con">
+		<dl>
+		<dt>默认地址：</dt>
+		{% if hasaddress %}
+			<dd>({{reciver.r_province}}省) ({{reciver.r_city}}市)({{reciver.r_district}}区)({{reciver.r_address}})({{reciver.r_name}} 收){{ reciver.r_phone }}</dd>
+		{% else %}
+			<dd>无默认地址</dd>
+		{% endif %}
+				</dl>				
+				</div>
+				<h3 class="common_title2">地址管理</h3>
+				<div class="site_con">
+					<form method="post" action={%url 'user:addsite_show' %}>
+						{% csrf_token %}
+						<div class="form_group">
+							<label>收件人：</label>
+							<input type="text" name="r_name">
+						</div>
+						<div class="form_group">
+							<label>邮&emsp;编：</label>
+							<input type="text" name="r_zipcode">
+						</div>
+						<div class="form_group">
+							<label>手&emsp;机：</label>
+							<input type="text" name="r_phone">
+						</div>
+
+						<div class="form_group form_group2">
+							<label>地&emsp;址：</label>
+							<div><input type="text" name="r_province"><font size="2">省</font></div>
+							<div><label>&emsp;&emsp;&emsp;</label><input type="text" name="r_city" align="right"/><font size="2">市</font></div>
+							<div><label>&emsp;&emsp;&emsp;</label><input type="text" name="r_district"><font size="2" >区/县</font></div>
+							
+                   			<div><label>具体地址:</label>
+                    		<input type="text" name="r_address"></div></div>
+							<input type="submit" name="" value="保存" class="info_submit">
+                            </form>
+							<br>
+							<br>
+							<br>
+					<p style='color:red;text-align:center;font-size:17px' >{{errmsg}}<p>
+{% endblock right_content %}

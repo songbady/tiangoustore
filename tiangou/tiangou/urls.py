@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/', include('user.urls',namespace='user')), #为用户模块分配名字空间
     path('good/', include('good.urls',namespace='good')), #为商品模块分配名字空间
+    path('order/', include('order.urls',namespace='order')), #为订单模块分配名字空间
 
 ]
 

@@ -9,4 +9,8 @@ urlpatterns = [
     path('register/',views.Register,name='register'),
     path('perInf/',views.perInf),
     path('logout/',views.Logout,name='logout'),
+    path('order/<int:num>/',views.showorders),
+    path('placeorder/<int:oid>/',views.placeorder),
+    path('addsite_show/',views.addresschange,name='addsite_show')
+
 ]

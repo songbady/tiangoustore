@@ -110,7 +110,7 @@
 				<input type='button' class="add_cart" id="add_cart" value='加入购物车' onclick='act2()'>
 			{%endif%}
 			    
-			    <p>jkdjfd</p>
+			    
 			</div>
 			<br>
 			<p style='font-size:17px;color:red;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -206,7 +206,7 @@
             count = $('.num_show').val()
             // 减1
             count = parseInt(count)-1
-            if (count &lt; 0){
+            if (count <= 0){
                 count = 1
             }
             // 重新设置商品的数目
@@ -245,13 +245,13 @@
 
 		$(document).on('click','#add_cart',function(){
             // 获取商品id和商品数量
-            sku_id = $('.goodid').val()
+            sku_id = $(this).attr('sku_id') // attr prop
             count = $('.num_show').val()
             csrf = $('input[name="csrfmiddlewaretoken"]').val()
             // 组织参数
             params = {'g_id':sku_id, 'count':count, 'csrfmiddlewaretoken':csrf}
             // 发起ajax post请求，访问/cart/add, 传递参数:sku_id count
-            $.post('/cart/update/', params, function (data) {
+            $.post('/cart/add', params, function (data) {
                 if (data.res == 5){
                     // 添加成功
                     $(".add_jump").css({'left':$add_y+80,'top':$add_x+10,'display':'block'})

@@ -27,7 +27,7 @@
 					<span>|</span>
 					<a href="/user/perInf/">用户中心</a>
 					<span>|</span>
-					<a href="cart.html">我的购物车</a>
+					<a href="/cart/perinf">我的购物车</a>
 					<span>|</span>
 					
 					<a href="/user/logout/" style='color:red' onclick="return check_return()">退出登录</a>
@@ -42,10 +42,11 @@
 			<form method='post' action='/good/search/{{num}}/'> {%csrf_token%}
 			<input type="text" class="input_text fl" name="search_good" placeholder="搜索商品" id='search'>
 			<input type="submit" class="input_btn fr" name="submit" value="搜索" id='submit'>
+            <input type="hidden" class="goodid fl" value="{{good.g_id}}">
 		</form>
 		</div>
 		<div class="guest_cart fr">
-			<a href="cart.html" class="cart_name fl">我的购物车</a>
+			<a href="/cart/perinf" class="cart_name fl">我的购物车</a>
 			<div class="goods_count fl" id="show_count">1</div>
 		</div>
 	</div>
@@ -91,6 +92,7 @@
             <form name='frm' method='get'> {% csrf_token %}
 			<div class="goods_num clearfix">
 				<div class="num_name fl">数 量：</div>
+
 				<div class="num_add fl">
 					<input type="text" class="num_show fl" value="1" g_total={{good.g_total}} name='count'>
 					<a href="javascript:;" class="add fr" g_total={{good.g_total}}>+</a>
@@ -107,10 +109,14 @@
 			    <input type='button' class="buy_btn" value='已下架' >
 				<input type='button' class="add_cart" id="add_cart" value='加入购物车' onclick='act2()'>
 			{%endif%}
+			    
+			    <p>jkdjfd</p>
 			</div>
-			
-			
+			<br>
+			<p style='font-size:17px;color:red;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{msg}}</p>
             </form>
+
 		</div>
 	</div>
 
@@ -200,7 +206,7 @@
             count = $('.num_show').val()
             // 减1
             count = parseInt(count)-1
-            if (count <= 0){
+            if (count &lt; 0){
                 count = 1
             }
             // 重新设置商品的数目
@@ -239,13 +245,13 @@
 
 		$(document).on('click','#add_cart',function(){
             // 获取商品id和商品数量
-            sku_id = $(this).attr('sku_id') // attr prop
+            sku_id = $('.goodid').val()
             count = $('.num_show').val()
             csrf = $('input[name="csrfmiddlewaretoken"]').val()
             // 组织参数
             params = {'g_id':sku_id, 'count':count, 'csrfmiddlewaretoken':csrf}
             // 发起ajax post请求，访问/cart/add, 传递参数:sku_id count
-            $.post('/cart/add', params, function (data) {
+            $.post('/cart/update/', params, function (data) {
                 if (data.res == 5){
                     // 添加成功
                     $(".add_jump").css({'left':$add_y+80,'top':$add_x+10,'display':'block'})
@@ -295,7 +301,7 @@
         document.frm.submit()
     }
     function act2(){
-        document.frm.action='/user/login/'
+        document.frm.action='/cart/update/{{good.g_id}}/'
         document.frm.submit()
     }
     </script>

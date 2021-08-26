@@ -55,7 +55,7 @@ def list(request,tid=1,num=1):
     else:
         return redirect('/user/login/')
 #显示商品详情
-def detail(request,gid):
+def detail(request,gid,msg=''):
     if request.session.get('islogin')=='1':
         #参数转型
         gid=int(gid)
@@ -65,7 +65,7 @@ def detail(request,gid):
         tname=type.objects.get(t_id=cur_good.t_id).t_name
         #获取最近上架商品
         new_goodslist=good.objects.order_by('uptime')[0:2]
-        return render(request,'detail.html',{'good':cur_good,'tid1':1,'tid2':2,'tid3':3,'tid4':4,'num':1,'tname':tname,'newgoods':new_goodslist})
+        return render(request,'detail.html',{'good':cur_good,'tid1':1,'tid2':2,'tid3':3,'tid4':4,'num':1,'tname':tname,'newgoods':new_goodslist,'msg':msg})
     else :
         return redirect('/user/login/')
 #搜索商品

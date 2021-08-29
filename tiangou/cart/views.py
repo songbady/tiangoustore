@@ -93,7 +93,7 @@ class CartUpdateView(View):
         for aCart in carts:
             total_count += aCart.goodAmount
         # 返回应答
-        message='更新成功'
+        message='已加入购物车'
         return detail(request,sku_id,msg=message)
 
 

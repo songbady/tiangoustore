@@ -49,8 +49,6 @@ class CartUpdateView(View):
         # 接收数据
         sku_id = int(gid)
         count = request.GET.get('count')
-        print(sku_id)
-        print(count)
         # 数据校验
         if not all([sku_id, count]):
             message='数据不完整'
@@ -78,14 +76,12 @@ class CartUpdateView(View):
             return detail(request,sku_id,msg=message)
 
         #更新购物车表的内容
-        
-        #加一个判断，如果为空#########################################################################################
+
         if (cart.objects.filter(userId=int(request.session.get('u_id')),g_id=sku_id).exists()):
-            
+
             newCart = cart.objects.get(userId=int(request.session.get('u_id')),g_id=sku_id)
             total_count=newCart.goodAmount+count
             cart.objects.filter(userId=int(request.session.get('u_id')),g_id=sku_id).update(goodAmount=total_count)
-            
         else:
             cart.objects.create(userId=int(request.session.get('u_id')),g_id=sku_id,goodAmount=count)
         # 计算用户购物车中商品的总件数
@@ -97,6 +93,41 @@ class CartUpdateView(View):
         message='加入购物车成功'
         return detail(request,sku_id,msg=message)
 
+
+class CartUpdateView1(View):
+    '''购物车记录更新'''
+    def post(self, request):
+        # 接收数据
+        sku_id = request.POST.get('sku_id')
+        count = request.POST.get('count')
+        # 数据校验
+        if not all([sku_id, count]):
+            return JsonResponse({'res': 1, 'errmsg': '数据不完整'})
+        # 校验添加的商品数量
+        try:
+            count = int(count)
+        except Exception as e:
+            # 数目出错
+            return JsonResponse({'res': 2, 'errmsg': '商品数目出错'})
+        # 校验商品是否存在
+        try:
+            sku = good.objects.get(g_id=sku_id)
+        except cart.DoesNotExist:
+            # 商品不存在
+            return JsonResponse({'res': 3, 'errmsg': '商品不存在'})
+        # 校验商品的库存
+        if count > sku.g_total:
+            return JsonResponse({'res': 4, 'errmsg': '商品库存不足'})
+        # 更新购物车表的内容
+        userid = int(request.session.get('u_id'))
+        cart.objects.filter(userId=userid, g_id=sku_id).update(goodAmount=count)
+        # 计算用户购物车中商品的总件数 {'1':5, '2':3}
+        total_count = 0
+        vals = cart.objects.filter(userId=userid)
+        for val in vals:
+            total_count += val.goodAmount
+        # 返回应答
+        return JsonResponse({'res': 5, 'total_count': total_count, 'message': '更新成功'})
 
 class CartDeleteView(View):
     '''购物车记录删除'''

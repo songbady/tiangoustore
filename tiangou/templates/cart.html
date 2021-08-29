@@ -1,8 +1,13 @@
-{% extends 'base_no_cart.html' %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 {% load static %}
-{% block title %}天狗商城-购物车{% endblock title %}
-{% block page_title %}购物车{% endblock page_title %}
-{% block body %}
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>天狗商城-购物车</title>
+	<link rel="stylesheet" type="text/css" href="/static/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
+</head>
+
 	<div class="total_count">全部商品<em>{{ total_count }}</em>件</div>
 	<ul class="cart_list_th clearfix">
 		<li class="col01">商品名称</li>
@@ -13,10 +18,10 @@
 		<li class="col06">操作</li>
 	</ul>
     </div>
-    <form method="get" action="/user/login/">
+    <form method="get" action="/cart/paycart/">
     {% for sku in skus %}
 	<ul class="cart_list_td clearfix">
-        <li class="col01"><input type="checkbox" name="sku_ids" value="{{ sku.goodId }}" checked></li>
+        <li class="col01"><input type="checkbox" name="goods_{{sku.goodId}}" value="{{ sku.goodId }}" checked></li>
         <li class="col02"><img src="{{ sku.goodUrl }}"></li>
         <li class="col03">{{ sku.goodName }}<br><em>{{ sku.goodPrice }}元/{{ sku.goodUnite }}</em></li>
         <li class="col04">{{ sku.goodUnite }}</li>
@@ -24,7 +29,7 @@
 		<li class="col06">
 			<div class="num_add">
 				<a href="javascript:;" class="add fl">+</a>
-				<input type="text" sku_id="{{ sku.goodId }}" class="num_show fl" value="{{ sku.goodAmount }}">
+				<input type="text" sku_id="{{ sku.goodId }}" class="num_show fl" value="{{ sku.goodAmount }}" name="count_{{sku.goodId}}">
 				<a href="javascript:;" class="minus fl">-</a>
 			</div>
         </li>
@@ -40,8 +45,8 @@
 		<li class="col04"><input type="submit" value="去结算"></li>
 	</ul>
     </form>
-{% endblock body %}
-{% block bottomfiles %}
+
+
     <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
     <script>
     // 计算被选中的商品的总件数和总价格
@@ -249,4 +254,4 @@
         })
     })
     </script>
-{% endblock bottomfiles %}
+</html>

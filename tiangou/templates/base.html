@@ -21,11 +21,11 @@
 		<div class="header">
 			<div class="welcome fl">欢迎来到天狗商城!</div>
 			<div class="fr">
-                {% if user.is_authenticated %}
+                {% if islogin %}
 				<div class="login_btn fl">
 					欢迎您：<em>{{ username }}</em>
-                    <span>|</span>
-					<a href="{% url 'user:logout' %}">退出</a>
+                   <span>|</span>
+					<a href="/user/logout/" style='color:red' onclick="return check_return()">退出登录</a>
 				</div>
                 {% else %}
 				<div class="login_btn fl">
@@ -40,8 +40,7 @@
 					<span>|</span>
 					<a href="/cart/cart/">我的购物车</a>
 					
-					<span>|</span>
-					<a href="/user/logout/" style='color:red' onclick="return check_return()">退出登录</a>
+					
 				</div>
 			</div>
 		</div>		

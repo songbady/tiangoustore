@@ -34,7 +34,7 @@ def list(request,tid=1,num=1):
         Tid=tid
 
         #商品分页显示
-        pager=Paginator(goodslist,1)
+        pager=Paginator(goodslist,4)
         #获取当前页面商品
         page_goodslist=pager.page(num)
         #计算开始页码

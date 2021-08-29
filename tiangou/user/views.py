@@ -102,7 +102,7 @@ def showorders(reqeust,num):
     #查询所有订单
     orderlist=order.objects.filter(u_id=int(reqeust.session.get('u_id')))
     #分页显示
-    pager=Paginator(orderlist,1)
+    pager=Paginator(orderlist,4)
     #获取当前页面订单
     page_orderlist=pager.page(num)
     #计算开始页码
@@ -118,7 +118,7 @@ def showorders(reqeust,num):
     else:
         begin=end-9
     pagelist=range(begin,end+1)  
-    return render(reqeust,'user_center_order.html',{'orderlist':page_orderlist,'pagelist':pagelist})
+    return render(reqeust,'user_center_order.html',{'orderlist':page_orderlist,'pagelist':pagelist,'satus':1})
 
 def placeorder(request,oid):
     

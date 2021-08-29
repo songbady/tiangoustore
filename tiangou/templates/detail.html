@@ -15,22 +15,24 @@
 		<div class="header">
 			<div class="welcome fl">欢迎来到天狗商城!</div>
 			<div class="fr">
-				<div class="login_info fl">
-					欢迎您：<em>张 山</em>
-				</div>
+				  {% if islogin %}
 				<div class="login_btn fl">
-					<a href="/user/login/">登录</a>
-					<span>|</span>
-					<a href="/user/register/">注册</a>
+					欢迎您：<em>{{ username }}</em>
+                   <span>|</span>
+					<a href="/user/logout/" style='color:red' onclick="return check_return()">退出登录</a>
 				</div>
+                {% else %}
+				<div class="login_btn fl">
+					<a href="{% url 'user:login' %}">登录</a>
+					<span>|</span>
+					<a href="{% url 'user:register' %}">注册</a>
+				</div>
+                {% endif %}
 				<div class="user_link fl">
 					<span>|</span>
 					<a href="/user/perInf/">用户中心</a>
 					<span>|</span>
-					<a href="/cart/perinf">我的购物车</a>
-					<span>|</span>
-					
-					<a href="/user/logout/" style='color:red' onclick="return check_return()">退出登录</a>
+					<a href="/cart/cart/">我的购物车</a>
 				</div>
 			</div>
 		</div>		
@@ -107,7 +109,7 @@
 				<input type='button' class="add_cart" id="add_cart" value='加入购物车' onclick='act2()'>	
 			{%else%}		
 			    <input type='button' class="buy_btn" value='已下架' >
-				<input type='button' class="add_cart" id="add_cart" value='加入购物车' onclick='act2()'>
+				<input type='button' class="add_cart" id="{{good.g_id}}" value='加入购物车' onclick='act2()'>
 			{%endif%}
 			    
 			    
@@ -304,6 +306,7 @@
         document.frm.action='/cart/update/{{good.g_id}}/'
         document.frm.submit()
     }
+	
     </script>
 </body>
 </html>

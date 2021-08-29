@@ -6,4 +6,6 @@ urlpatterns = [
     path('update/<int:gid>/', views.CartUpdateView.as_view()),
     path('delete/<int:gid>/', views.CartDeleteView.as_view()),
     path('perinf/', views.perInf),
+    path('paycart/',views.paycart),
+    path('endpay/',views.endpay)
 ]

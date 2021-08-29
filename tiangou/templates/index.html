@@ -1,76 +1,27 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-	<title>天狗商城-首页</title>
-	<link rel="stylesheet" type="text/css" href="/static/css/reset.css">
-	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
-	<script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
-	<script type="text/javascript" src="/static/js/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="/static/js/slide.js"></script>
-	<script type="text/javascript" src="/static/js/search.js"></script>
-</head>
-<body>
-	<div class="header_con">
-		<div class="header">
-			<div class="welcome fl">欢迎来到天狗商城!</div>
-			<div class="fr">
-				<div class="login_info fl">
-					欢迎您：<em>张 山</em>
-				</div>
-				<div class="login_btn fl">
-					<a href="/user/login/">登录</a>
-					<span>|</span>
-					<a href="/user/register/">注册</a>
-					
-					
-				</div>
-				<div class="user_link fl">
-					<span>|</span>
-					<a href="/user/perInf/">用户中心</a>
-					<span>|</span>
-					<a href="/cart/perinf/">我的购物车</a>
-					
-					{%if islogin%}
-					<span>|</span>
-					<a href="/user/logout/" style='color:red' onclick="return check_return()">退出登录</a>
-					{%endif%}
-				</div>
-			</div>
-		</div>		
-	</div>
-
-	<div class="search_bar clearfix">
-		<a href="/" class="logo fl"><img src="/static/images/logo.jpg"></a>
-		<div class="search_con fl">
-		<form method='post' action='/good/search/{{num}}/'> {%csrf_token%}
-			<input type="text" class="input_text fl" name="search_good" placeholder="搜索商品" id='search'>
-			<input type="submit" class="input_btn fr" name="submit" value="搜索" id='submit'>
-		</form>
-		</div>
-		<div class="guest_cart fr">
-			<a href="/cart/perinf" class="cart_name fl">我的购物车</a>
-			<div class="goods_count fl" id="show_count">1</div>
-		</div>
-	</div>
-
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}天狗商城-首页{% endblock title %}
+{% block topfiles %}
+	<script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/jquery-ui.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/slide.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/search.js' %}"></script>
+{% endblock topfiles %}
+{% block body %}
 	<div class="navbar_con">
 		<div class="navbar">
-			<h1 class="fl">全部商品分类</h1>
-			<ul class="navlist fl">
-				<li><a href="">首页</a></li>
-				
-			</ul>
+			<h1 class="fl">商品分类</h1>
 		</div>
 	</div>
 
 	<div class="center_con clearfix">
 		<ul class="subnav fl">
-			<li><a href="#model01" class="fruit">电脑</a></li>
-			<li><a href="#model02" class="seafood">手机</a></li>
-			<li><a href="#model03" class="meet">男装</a></li>
-			<li><a href="#model04" class="egg">女装</a></li>
+			<li><a href="#model01">手机</a></li>
+			<li><a href="#model02">电脑</a></li>
+			<li><a href="#model03">男装</a></li>
+			<li><a href="#model04">女装</a></li>
 		</ul>
+
 		<div class="slide fl">
 			<ul class="slide_pics">
 				<li><img src="/static/images/slide.jpg" alt="幻灯片"></li>
@@ -88,7 +39,7 @@
 		</div>
 	</div>
 
-	<div class="list_model">
+    <div class="list_model">
 		<div class="list_title clearfix">
 			<h3 class="fl" id="model01">电脑</h3>
 			
@@ -171,48 +122,4 @@
 			</ul>
 		</div>
 	</div>
-
-	
-
-	<div class="footer">
-		<div class="foot_link">
-			<a href="#">关于我们</a>
-			<span>|</span>
-			<a href="#">联系我们</a>
-			<span>|</span>
-			<a href="#">招聘人才</a>
-			<span>|</span>
-			<a href="#">友情链接</a>		
-		</div>
-		<p>CopyRight © 2016 重庆天狗商城信息技术有限公司 All Rights Reserved</p>
-		<p>电话：010-****888    京ICP备*******8号</p>
-	</div>
-	<script type="text/javascript" src="/static/js/slideshow.js"></script>
-	<script type="text/javascript">
-		BCSlideshow('focuspic');
-		var oFruit = document.getElementById('fruit_more');
-		var oShownum = document.getElementById('show_count');
-
-		var hasorder = localStorage.getItem('order_finish');
-
-		if(hasorder)
-		{
-			oShownum.innerHTML = '2';
-		}
-
-		oFruit.onclick = function(){
-			window.location.href = 'list.html';
-		}
-	</script>
-	<script type="text/javascript">
-	function check_return(){
-		if (confirm('确定退出吗?')){
-			return true
-		}
-		else{
-			return false
-		}
-	}
-	</script>
-</body>
-</html>
+{% endblock body %}

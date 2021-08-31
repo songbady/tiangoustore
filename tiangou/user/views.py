@@ -9,6 +9,16 @@ import math
 from django.core.paginator import Paginator
 import re
 from django.urls import reverse
+from hashlib import sha1
+
+
+def get_sha1(str,salt=None):
+    str = '!@#$%'+str+'&^**('
+    if salt:
+        str = str + salt
+    sh = sha1()
+    sh.update(str.encode('utf-8'))
+    return sh.hexdigest() 
 
 
 # Create your views here.
@@ -20,6 +30,7 @@ def Login(request):
         #获取输入的用户名和密码
         name=request.POST.get('username')
         pwd=request.POST.get('password')
+        pwd=get_sha1(pwd)
         
         #判断数据库中有无该用户    
         isuser=user.objects.filter(username=name).exists()
@@ -58,6 +69,7 @@ def Register(request):
         #获取输入的用户名和密码
         name=request.POST.get('username')
         pwd=request.POST.get('password')
+        pwd=get_sha1(pwd)
         #判断数据库中有无该用户名
         isuser=user.objects.filter(username=name).exists()
         if (isuser):

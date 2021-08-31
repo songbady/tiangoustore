@@ -1,59 +1,3 @@
-<<<<<<< HEAD
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-	<title>天狗商城-首页</title>
-	<link rel="stylesheet" type="text/css" href="/static/css/reset.css">
-	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
-	<script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
-	<script type="text/javascript" src="/static/js/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="/static/js/slide.js"></script>
-	<script type="text/javascript" src="/static/js/search.js"></script>
-</head>
-<body>
-	<div class="header_con">
-		<div class="header">
-			<div class="welcome fl">欢迎来到天狗商城!</div>
-			<div class="fr">
-				  {% if islogin %}
-				<div class="login_btn fl">
-					欢迎您：<em>{{ username }}</em>
-                   <span>|</span>
-					<a href="/user/logout/" style='color:red' onclick="return check_return()">退出登录</a>
-				</div>
-                {% else %}
-				<div class="login_btn fl">
-					<a href="{% url 'user:login' %}">登录</a>
-					<span>|</span>
-					<a href="{% url 'user:register' %}">注册</a>
-				</div>
-                {% endif %}
-				<div class="user_link fl">
-					<span>|</span>
-					<a href="/user/perInf/">用户中心</a>
-					<span>|</span>
-					<a href="/cart/cart/">我的购物车</a>
-				</div>
-			</div>
-		</div>		
-	</div>
-
-	<div class="search_bar clearfix">
-		<a href="/" class="logo fl"><img src="/static/images/logo.jpg"></a>
-		<div class="search_con fl">
-		<form method='post' action='/good/search/{{num}}/'> {%csrf_token%}
-			<input type="text" class="input_text fl" name="search_good" placeholder="搜索商品" id='search'>
-			<input type="submit" class="input_btn fr" name="submit" value="搜索" id='submit'>
-		</form>
-		</div>
-		<div class="guest_cart fr">
-			<a href="/cart/perinf" class="cart_name fl">我的购物车</a>
-			<div class="goods_count fl" id="show_count">1</div>
-		</div>
-	</div>
-
-=======
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}天狗商城-首页{% endblock title %}
@@ -64,7 +8,6 @@
 	<script type="text/javascript" src="{% static 'js/search.js' %}"></script>
 {% endblock topfiles %}
 {% block body %}
->>>>>>> 317414a0c132534335a43ae0a7f07a23d02566ee
 	<div class="navbar_con">
 		<div class="navbar">
 			<h1 class="fl">商品分类</h1>

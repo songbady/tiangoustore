@@ -14,7 +14,7 @@ class user(models.Model):
     ur_id = models.IntegerField()
     ban = models.PositiveIntegerField(default=0,verbose_name='状态',choices=STATE_ITEM)
     #ban =  models.PositiveSmallIntegerField(default=0,verbose_name='状态',choices=STATE_ITEM)
-    del_flag = models.TextField()  # This field type is a guess.
+    #del_flag = models.TextField()  # This field type is a guess.
 
     class Meta:
         #managed = False

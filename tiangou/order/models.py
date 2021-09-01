@@ -4,7 +4,7 @@ from good.models import good
 
 # Create your models here.
 class order(models.Model):
-    o_id=models.IntegerField(verbose_name='订单id',db_column='o_id')
+    o_id=models.IntegerField(verbose_name='订单id',primary_key=True)
     u_id=models.IntegerField(verbose_name='用户id',db_column='u_id')
     time=models.DateTimeField(verbose_name='下单时间',db_column='time',auto_now=True)
     g_id=models.IntegerField(verbose_name='商品id',db_column='g_id')

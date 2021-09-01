@@ -7,13 +7,8 @@ from order.models import *
 
 class orderAdmin(admin.ModelAdmin):
     #列表显示的字段
-    list_display = ['u_id','o_id','time','g_id','o_number','pay_status','price','operator']
-   #列表页的链接
-    list_display_links = ['o_id','u_id']
-    #支持模糊搜索的选项
-    search_fields = ['o_id','u_id']
-    #可在列表操作的信息
-    list_editable = ['o_number']
+    list_display = ['u_id','o_id','time','g_id','o_number','pay_status','price']
+
      #过滤的信息
     list_filter = ['time','g_id'] 
     #分页功能

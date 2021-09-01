@@ -7,7 +7,7 @@ class good(models.Model):
     g_price=models.DecimalField(verbose_name='商品价格',db_column='g_price',max_digits=10,decimal_places=2)
     g_picture=models.CharField(verbose_name='商品图片',db_column='g_picture',max_length=255)
     g_intro=models.CharField(verbose_name='商品简介',db_column='g_intro',max_length=500)
-    g_id=models.IntegerField(verbose_name='商品id',db_column='g_id')
+    g_id=models.IntegerField(verbose_name='商品id',primary_key=True)
     t_id=models.IntegerField(verbose_name='商品类别id',db_column='t_id') #商品类别id
     uptime=models.DateTimeField(verbose_name='商品上架时间',db_column='uptime',auto_now_add=True) #商品上架时间，下架时间未用上暂时未写
     g_total=models.IntegerField(verbose_name='商品库存',db_column='g_total') #商品库存

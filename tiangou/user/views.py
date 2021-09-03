@@ -130,7 +130,7 @@ def showorders(reqeust,num):
     else:
         begin=end-9
     pagelist=range(begin,end+1)  
-    return render(reqeust,'user_center_order.html',{'orderlist':page_orderlist,'pagelist':pagelist,'satus':1})
+    return render(reqeust,'user_center_order.html',{'orderlist':page_orderlist,'pagelist':pagelist,'satus':1,'num':1})
 
 def placeorder(request,oid):
     

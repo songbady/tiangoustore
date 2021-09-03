@@ -82,7 +82,7 @@ def search(request,num=1):
     if (hasgood):
         goodslist=good.objects.filter(g_name__icontains=gname)
         #商品分页显示
-        pager=Paginator(goodslist,1)
+        pager=Paginator(goodslist,4)
         #获取当前页面商品
         page_goodslist=pager.page(num)
         
